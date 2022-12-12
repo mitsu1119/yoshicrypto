@@ -15,3 +15,19 @@ class Integer:
     def __mul__(self, other):
         return Integer(self.value * other.value)
 
+    def __iadd__(self, other):
+        self.value += other.value
+        return self
+
+    def __isub__(self, other):
+        self.value -= other.value
+        return self
+
+    def __imul__(self, other):
+        self.value *= other.value
+        return self
+
+    def __str__(self):
+        return str(self.value)
+
+ZZ = Integer
