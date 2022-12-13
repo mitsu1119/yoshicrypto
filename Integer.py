@@ -1,7 +1,10 @@
 
 class Integer:
     def __init__(self, value, parent):
-        self.value = value
+        if isinstance(value, int):
+            self.value = value
+        else:
+            self.value = value.to_Integer()
         self.__parent = parent
 
     def __add__(self, other):
@@ -79,20 +82,16 @@ class Integer:
     def parent(self):
         return self.__parent
 
-    def to_Integer(self, parent=None):
-        if parent is None:
-            parent = self.__parent
-        return Integer(self.value, parent)
+    def to_Integer(self):
+        return self.value
 
     def to_FiniteField(self, order):
         return self.value % ZZ(order).value
 
 class IntegerRing:
     def __call__(self, value):
-        if isinstance(value, int):
+        if self.__convertable_from(value):
             return Integer(value, self)
-        elif self.__convertable_from(value):
-            return value.to_Integer(self)
         else:
             raise TypeError("Integer class must be int value")
 

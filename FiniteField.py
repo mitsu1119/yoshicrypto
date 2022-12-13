@@ -18,8 +18,11 @@ class Fp_Integer:
     def parent(self):
         return self.__parent
 
-    def to_Integer(self, parent):
-        return Integer(self.value, parent)
+    def to_Integer(self):
+        return self.value
+
+    def to_FiniteField(self, order):
+        return self.value % ZZ(order).value
 
 class FiniteField:
     def __init__(self, order):
