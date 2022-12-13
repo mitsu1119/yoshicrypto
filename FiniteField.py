@@ -31,7 +31,12 @@ class Fp_Integer:
         if isinstance(other, self.__class__):
             return Fp_Integer((self.value * other.value) % ZZ(self.__order).value, self.__order, self.__parent)
         raise TypeError(f"unsupported operand for *: '{str(self.parent())}' and '{str(other.parent())}'")
-
+    def __truediv__(self, other):
+        if isinstance(other, self.__class__):
+            return self * other.inv()
+        raise TypeError(f"unsupported operand for /: '{str(self.parent())}' and '{str(other.parent())}'")
+    def inv(self):
+        return Fp_Integer(pow(self.value, -1, ZZ(self.__order).value), self.__order, self.__parent)
 
     # --------------------------------------------------------------------------------------------
     # Arithmetic and Assignment Operators
@@ -54,6 +59,12 @@ class Fp_Integer:
             self.value %= ZZ(self.__order).value
             return self
         raise TypeError(f"unsupported operand for *: '{str(self.parent())}' and '{str(other.parent())}'")
+    def __itruediv__(self, other):
+        if isinstance(other, self.__class__):
+            self.value *= other.inv().value
+            self.value %= ZZ(self.__order).value
+            return self
+        raise TypeError(f"unsupported operand for /: '{str(self.parent())}' and '{str(other.parent())}'")
 
     # --------------------------------------------------------------------------------------------
     # Comparison Operators
