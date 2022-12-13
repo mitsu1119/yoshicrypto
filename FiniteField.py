@@ -10,6 +10,11 @@ class Fp_Integer:
         self.__order = order
         self.__parent = parent
 
+    # --------------------------------------------------------------------------------------------
+    # Attribute Getter
+    # --------------------------------------------------------------------------------------------
+    def parent(self):
+        return self.__parent
 
     # --------------------------------------------------------------------------------------------
     # Arithmetic Operators
@@ -87,9 +92,6 @@ class Fp_Integer:
         return str(self.value)
     def __int__(self):
         return int(self.value)
-
-    def parent(self):
-        return self.__parent
 
     # --------------------------------------------------------------------------------------------
     # Type Convertion

@@ -8,6 +8,12 @@ class Integer:
         self.__parent = parent
 
     # --------------------------------------------------------------------------------------------
+    # Attribute Getter
+    # --------------------------------------------------------------------------------------------
+    def parent(self):
+        return self.__parent
+
+    # --------------------------------------------------------------------------------------------
     # Arithmetic Operators
     # --------------------------------------------------------------------------------------------
     def __add__(self, other):
@@ -79,7 +85,6 @@ class Integer:
         if isinstance(other, self.__class__):
             return (self.value >= other.value)
         raise TypeError(f"unsupported operand for >=: '{str(self.parent())}' and '{str(other.parent())}'")
-
     
     # --------------------------------------------------------------------------------------------
     # Other Special Method
@@ -90,9 +95,6 @@ class Integer:
         return str(self.value)
     def __int__(self):
         return self.value
-
-    def parent(self):
-        return self.__parent
 
     # --------------------------------------------------------------------------------------------
     # Type Convertion
