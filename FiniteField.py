@@ -3,7 +3,10 @@ from sympy import isprime
 
 class Fp_Integer:
     def __init__(self, value, order, parent):
-        self.value = value.to_FiniteField(order)
+        if isinstance(value, int):
+            self.value = value % order.value
+        else:
+            self.value = value.to_FiniteField(order)
         self.__order = order
         self.__parent = parent
 
@@ -26,8 +29,11 @@ class Fp_Integer:
 
 class FiniteField:
     def __init__(self, order):
-        if not isinstance(order, Integer):
-            raise TypeError(f"order mult be an Integer")
+        try:
+            order = ZZ(order)
+        except:
+            raise ValueError("the order of a FiniteField must be an Integer")
+
         if order < ZZ(2):
             raise ValueError("the order of a FiniteField must be at least 2")
         if not isprime(order.value):
@@ -46,6 +52,6 @@ class FiniteField:
         return self.__order
 
     def __convertable_from(self, other):
-        if hasattr(other, "to_FiniteField"):
+        if isinstance(other, int) or hasattr(other, "to_FiniteField"):
             return True
         return False
