@@ -1,6 +1,9 @@
 from yoshicrypto.util.Pari import *
 from yoshicrypto.ring.Integer import *
 
+# --------------------------------------------------------------------------------------------
+# Euler's totient function \phi(n)
+# --------------------------------------------------------------------------------------------
 class Euler_Totient:
     def __repr__(self):
         return "Euler's totient function φ(n)"
@@ -14,4 +17,13 @@ class Euler_Totient:
         return res
 
 euler_totient = Euler_Totient()
+
+# --------------------------------------------------------------------------------------------
+# Prime test
+# --------------------------------------------------------------------------------------------
+def is_prime(n):
+    return n.is_prime()
+
+def is_prime_power(n):
+    return n.is_prime_power()
 

@@ -1,3 +1,5 @@
+from yoshicrypto.util.Pari import *
+
 class Integer:
     def __init__(self, value, parent):
         if isinstance(value, int):
@@ -11,6 +13,22 @@ class Integer:
     # --------------------------------------------------------------------------------------------
     def parent(self):
         return self.__parent
+
+    def is_prime(self):
+        if self.value < 2:
+            return False
+        if self.value == 2:
+            return True
+        return pari(self.value).isprime()
+
+    def is_prime_power(self):
+        if self.value < 2:
+            return False
+        if self.value == 2:
+            return True
+        if pari(self.value).isprimepower()[0] == 0:
+            return False
+        return True
 
     # --------------------------------------------------------------------------------------------
     # Arithmetic Operators

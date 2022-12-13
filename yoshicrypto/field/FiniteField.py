@@ -1,5 +1,5 @@
 from yoshicrypto.ring.Integer import *
-from sympy import isprime
+from yoshicrypto.util.Ntheory import *
 
 class Fp_Integer:
     def __init__(self, value, order, parent):
@@ -124,7 +124,7 @@ class FiniteField:
 
         if order < ZZ(2):
             raise ValueError("the order of a FiniteField must be at least 2")
-        if not isprime(order.value):
+        if not is_prime(order):
             raise NotImplementedError("the order of a FiniteField must be prime")
         self.__order = order
 
