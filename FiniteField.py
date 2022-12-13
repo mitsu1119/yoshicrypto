@@ -30,7 +30,7 @@ class Fp_Integer:
     def __mul__(self, other):
         if isinstance(other, self.__class__):
             return Fp_Integer((self.value * other.value) % ZZ(self.__order).value, self.__order, self.__parent)
-        raise TypeError(f"unsupported operand for -: '{str(self.parent())}' and '{str(other.parent())}'")
+        raise TypeError(f"unsupported operand for *: '{str(self.parent())}' and '{str(other.parent())}'")
 
 
     # --------------------------------------------------------------------------------------------
@@ -47,13 +47,13 @@ class Fp_Integer:
             self.value -= other.value 
             self.value %= ZZ(self.__order).value
             return self
-        raise TypeError(f"unsupported operand for +: '{str(self.parent())}' and '{str(other.parent())}'")
+        raise TypeError(f"unsupported operand for -: '{str(self.parent())}' and '{str(other.parent())}'")
     def __imul__(self, other):
         if isinstance(other, self.__class__):
             self.value *= other.value 
             self.value %= ZZ(self.__order).value
             return self
-        raise TypeError(f"unsupported operand for +: '{str(self.parent())}' and '{str(other.parent())}'")
+        raise TypeError(f"unsupported operand for *: '{str(self.parent())}' and '{str(other.parent())}'")
 
     # --------------------------------------------------------------------------------------------
     # Comparison Operators
