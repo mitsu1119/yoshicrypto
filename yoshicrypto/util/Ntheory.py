@@ -1,5 +1,5 @@
-from yoshicrypto.Pari import *
-from yoshicrypto.Integer import *
+from yoshicrypto.util.Pari import *
+from yoshicrypto.ring.Integer import *
 
 class Euler_Totient:
     def __repr__(self):

@@ -1,4 +1,3 @@
-
 class Integer:
     def __init__(self, value, parent):
         if isinstance(value, int):

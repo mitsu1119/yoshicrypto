@@ -1,4 +1,4 @@
-from yoshicrypto.Integer import *
+from yoshicrypto.ring.Integer import *
 from sympy import isprime
 
 class Fp_Integer:

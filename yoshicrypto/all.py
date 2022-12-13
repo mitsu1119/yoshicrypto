@@ -1,5 +1,5 @@
-from yoshicrypto.Integer import *
-from yoshicrypto.FiniteField import *
-from yoshicrypto.Ntheory import *
+from yoshicrypto.ring.Integer import *
+from yoshicrypto.field.FiniteField import *
+from yoshicrypto.util.Ntheory import *
 
-from yoshicrypto.Pari import *
+from yoshicrypto.util.Pari import *
