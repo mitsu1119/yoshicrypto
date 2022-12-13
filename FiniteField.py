@@ -3,7 +3,7 @@ from sympy import isprime
 
 class Fp_Integer:
     def __init__(self, value, order, parent):
-        self.value = value % order
+        self.value = value.to_FiniteField(order)
         self.__order = order
         self.__parent = parent
 
@@ -32,7 +32,7 @@ class FiniteField:
         self.__order = order
 
     def __call__(self, value):
-        if isinstance(value, Integer):
+        if self.__convertable_from(value):
             return Fp_Integer(value, self.__order, self)
         raise ValueError(f"the element of {self.__str__()} must be Integer")
 
@@ -41,3 +41,8 @@ class FiniteField:
 
     def order(self):
         return self.__order
+
+    def __convertable_from(self, other):
+        if hasattr(other, "to_FiniteField"):
+            return True
+        return False

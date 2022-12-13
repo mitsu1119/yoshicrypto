@@ -84,6 +84,9 @@ class Integer:
             parent = self.__parent
         return Integer(self.value, parent)
 
+    def to_FiniteField(self, order):
+        return self.value % ZZ(order).value
+
 class IntegerRing:
     def __call__(self, value):
         if isinstance(value, int):
