@@ -124,9 +124,13 @@ class FiniteField:
 
         if order < ZZ(2):
             raise ValueError("the order of a FiniteField must be at least 2")
-        if not is_prime(order):
-            raise NotImplementedError("the order of a FiniteField must be prime")
-        self.__order = order
+        pw = is_prime_power(order)
+        if pw[0] == False:
+            raise ValueError("the order of a FiniteField must be a prime power")
+        if pw[1] == 1:
+            self.__order = order
+        else:
+            raise NotImplementedError("FiniteField the order of a prime power was not implemented")
 
     def __call__(self, value):
         if self.__convertable_from(value):
@@ -143,3 +147,5 @@ class FiniteField:
         if isinstance(other, int) or hasattr(other, "to_FiniteField"):
             return True
         return False
+
+GF = FiniteField

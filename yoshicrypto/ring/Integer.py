@@ -23,12 +23,13 @@ class Integer:
 
     def is_prime_power(self):
         if self.value < 2:
-            return False
+            return (False, 0)
         if self.value == 2:
-            return True
-        if pari(self.value).isprimepower()[0] == 0:
-            return False
-        return True
+            return (True, 1)
+        X = pari(self.value).isprimepower()
+        if X[0] == 0:
+            return (False, 0)
+        return (True, X[0])
 
     # --------------------------------------------------------------------------------------------
     # Arithmetic Operators
