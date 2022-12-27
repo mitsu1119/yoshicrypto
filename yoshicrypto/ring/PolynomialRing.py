@@ -12,6 +12,8 @@ class PolynomialRing:
         s = str(name)
         if len(s) == 0:
             raise ValueError("variable name must be nonempty")
+        if len(s.split()) > 1:
+            raise NotImplementedError("multivariate polynomial is not implemented")
         if not s[0].isalpha():
             raise ValueError(f"variable name '{s}' is not start with an alphabet")
         self.__name = s
