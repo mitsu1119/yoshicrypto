@@ -136,6 +136,11 @@ class IntegerRing:
     def __call__(self, value):
         return Integer(value, self)
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return True
+        return False
+
     def __str__(self):
         return "Integer Ring"
 
