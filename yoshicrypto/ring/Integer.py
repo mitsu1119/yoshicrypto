@@ -140,6 +140,10 @@ class IntegerRing:
         if isinstance(other, self.__class__):
             return True
         return False
+    def __ne__(self, other):
+        if isinstance(other, self.__class__):
+            return False
+        return True
 
     def __str__(self):
         return "Integer Ring"

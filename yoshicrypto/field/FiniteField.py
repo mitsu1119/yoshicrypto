@@ -165,11 +165,11 @@ class FiniteField:
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             return (self.__order == other.__order)
-        raise TypeError(f"unsupported operand for ==: '{str(self)}' and '{str(other)}'")
+        return False
     def __ne__(self, other):
         if isinstance(other, self.__class__):
             return (self.__order != other.__order)
-        raise TypeError(f"unsupported operand for !=: '{str(self)}' and '{str(other)}'")
+        return True
 
     def __str__(self):
         return f"finite field of order {self.__order}"
