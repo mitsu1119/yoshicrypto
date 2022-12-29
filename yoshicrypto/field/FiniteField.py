@@ -1,12 +1,21 @@
 from yoshicrypto.ring.Integer import *
 from yoshicrypto.util.Ntheory import *
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# self.value: Integer
+# self.order: Integer
+# self.__parent: Factory Class Object
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Fp_Integer:
     def __init__(self, value, order, parent):
-        if isinstance(value, int):
-            self.value = value % order.value
+        if isinstance(value, self.__class__):
+            self.value = value.value % order
+        elif isinstance(value, Integer):
+            self.value = value % order
+        elif isinstance(value, int):
+            self.value = ZZ(value % order.value)
         else:
-            self.value = value.to_FiniteField(order)
+            raise TypeError(f"unable to convert '{value}' to an FiniteField eleent")
         self.__order = order
         self.__parent = parent
 
@@ -30,22 +39,22 @@ class Fp_Integer:
     # --------------------------------------------------------------------------------------------
     def __add__(self, other):
         if self.is_calcable(other):
-            return Fp_Integer((self.value + other.value) % ZZ(self.__order).value, self.__order, self.__parent)
+            return Fp_Integer((self.value + other.value) % ZZ(self.__order), self.__order, self.__parent)
         raise TypeError(f"unsupported operand for +: '{str(self.parent())}' and '{str(other.parent())}'")
     def __sub__(self, other):
         if self.is_calcable(other):
-            return Fp_Integer((self.value - other.value) % ZZ(self.__order).value, self.__order, self.__parent)
+            return Fp_Integer((self.value - other.value) % ZZ(self.__order), self.__order, self.__parent)
         raise TypeError(f"unsupported operand for -: '{str(self.parent())}' and '{str(other.parent())}'")
     def __mul__(self, other):
         if self.is_calcable(other):
-            return Fp_Integer((self.value * other.value) % ZZ(self.__order).value, self.__order, self.__parent)
+            return Fp_Integer((self.value * other.value) % ZZ(self.__order), self.__order, self.__parent)
         raise TypeError(f"unsupported operand for *: '{str(self.parent())}' and '{str(other.parent())}'")
     def __truediv__(self, other):
         if self.is_calcable(other):
             return self * other.inv()
         raise TypeError(f"unsupported operand for /: '{str(self.parent())}' and '{str(other.parent())}'")
     def inv(self):
-        return Fp_Integer(pow(self.value, -1, ZZ(self.__order).value), self.__order, self.__parent)
+        return Fp_Integer(ZZ(pow(self.value.value, -1, self.__order.value)), self.__order, self.__parent)
 
     # --------------------------------------------------------------------------------------------
     # Arithmetic and Assignment Operators
@@ -142,9 +151,7 @@ class FiniteField:
             raise NotImplementedError("FiniteField the order of a prime power was not implemented")
 
     def __call__(self, value):
-        if self.__convertable_from(value):
-            return Fp_Integer(value, self.__order, self)
-        raise ValueError(f"the element of {self.__str__()} must be Integer")
+        return Fp_Integer(value, self.__order, self)
 
     # --------------------------------------------------------------------------------------------
     # Structure
@@ -169,10 +176,5 @@ class FiniteField:
 
     def order(self):
         return self.__order
-
-    def __convertable_from(self, other):
-        if isinstance(other, int) or hasattr(other, "to_FiniteField"):
-            return True
-        return False
 
 GF = FiniteField

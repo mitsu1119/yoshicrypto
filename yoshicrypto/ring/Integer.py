@@ -1,11 +1,20 @@
 from yoshicrypto.util.Pari import *
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# self.value: int
+# self.__parent: Factory Class Object
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Integer:
     def __init__(self, value, parent):
-        if isinstance(value, int):
+        from yoshicrypto.field.FiniteField import Fp_Integer
+        if isinstance(value, self.__class__):
+            self.value = value.value
+        elif isinstance(value, int):
             self.value = value
+        elif isinstance(value, Fp_Integer):
+            self.value = value.value
         else:
-            self.value = value.to_Integer()
+            raise TypeError("unable to convert to '{value}' to an integer")
         self.__parent = parent
 
     # --------------------------------------------------------------------------------------------
@@ -114,14 +123,6 @@ class Integer:
     def __int__(self):
         return self.value
 
-    # --------------------------------------------------------------------------------------------
-    # Type Convertion
-    # --------------------------------------------------------------------------------------------
-    def to_Integer(self):
-        return self.value
-    def to_FiniteField(self, order):
-        return self.value % ZZ(order).value
-
 # --------------------------------------------------------------------------------------------
 # Type Factory
 # --------------------------------------------------------------------------------------------
@@ -133,17 +134,9 @@ class IntegerRing:
         return True
 
     def __call__(self, value):
-        if self.__convertable_from(value):
-            return Integer(value, self)
-        else:
-            raise TypeError("Integer class must be int value")
+        return Integer(value, self)
 
     def __str__(self):
         return "Integer Ring"
-
-    def __convertable_from(self, other):
-        if isinstance(other, int) or hasattr(other, "to_Integer"):
-            return True
-        return False
 
 ZZ = IntegerRing()
